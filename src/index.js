@@ -1,8 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { reduxForm as reduxForm6 } from 'redux-form/immutable';
-import { Fields } from 'redux-form';
+import { Fields, reduxForm as reduxForm6 } from 'redux-form/immutable';
 import { get, set } from 'lodash';
 
 import type { ComponentType } from 'react';

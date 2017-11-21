@@ -15,8 +15,6 @@ var _reactRedux = require('react-redux');
 
 var _immutable = require('redux-form/immutable');
 
-var _reduxForm = require('redux-form');
-
 var _lodash = require('lodash');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -102,7 +100,7 @@ var FormWrapper = function FormWrapper(_ref2) {
 var ReduxFormCompat = function ReduxFormCompat(config, WrappedComponent) {
   var c = function c(props) {
     var fieldNames = props.fields || config.fields;
-    return _react2.default.createElement(_reduxForm.Fields, {
+    return _react2.default.createElement(_immutable.Fields, {
       names: fieldNames,
       component: FormWrapper,
       props: {
