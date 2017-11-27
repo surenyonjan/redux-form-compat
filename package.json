@@ -23,7 +23,8 @@
   "files": [
     "README.md",
     "es",
-    "lib"
+    "lib",
+    "immutable.js"
   ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
