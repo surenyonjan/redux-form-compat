@@ -1,21 +1,18 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
-import { Fields, reduxForm as reduxForm6 } from 'redux-form';
 import { get, set } from 'lodash';
 
-import type { ComponentType } from 'react';
 import type { Config } from 'redux-form/lib/createReduxForm';
 
 type FieldPropStyle =
-  | 'v5' // active, autoFill, autoFilled?, checked?, dirty, error?, initialValue, etc.
-  | 'v6' // input, meta
-  | 'v5v6'; // all of the above
+| 'v5' // active, autoFill, autoFilled?, checked?, dirty, error?, initialValue, etc.
+| 'v6' // input, meta
+| 'v5v6'; // all of the above
 
 export type CompatConfig = Config & {
-  fields: {},
-  fieldPropStyle?: FieldPropStyle,
-};
+    fields: {},
+    fieldPropStyle?: FieldPropStyle,
+  };
 
 // From https://github.com/erikras/redux-form/blob/v5.3.6/src/isChecked.js
 const isChecked = value => {
@@ -78,54 +75,21 @@ const mapFormProps = props => ({
   resetForm: props.reset,
 });
 
-const FormWrapper = ({
+export const FormWrapper = ({
   extraProps,
   fieldNames,
   fieldPropStyle,
   WrappedComponent,
   ...fieldsProps
-}) => {
+  }) => {
   const fields = mapFieldsProps(fieldPropStyle, fieldNames, fieldsProps);
   const formProps = mapFormProps(extraProps);
   return <WrappedComponent {...formProps} fields={fields} />;
 };
 
-const ReduxFormCompat = (config, WrappedComponent) => {
-  const c = props => {
-    const fieldNames = props.fields || config.fields;
-    return (
-      <Fields
-        names={fieldNames}
-        component={FormWrapper}
-        props={{
-          extraProps: props,
-          fieldNames,
-          fieldPropStyle: config.fieldPropStyle,
-          WrappedComponent,
-        }}
-      />
-    );
-  };
-  c.displayName = 'ReduxFormCompat';
-  return c;
-};
-
 // Default config options to more closely match v5.
-export const defaultConfig: Config = {
+export const defaultBaseConfig: Config = {
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
   fieldPropStyle: 'v5',
-};
-
-export const reduxForm = (
-  config: CompatConfig,
-  mapStateToProps?: mixed => mixed,
-  mapDispatchToProps?: mixed => mixed,
-  mergeProps?: mixed => mixed,
-  options?: mixed
-) => (WrappedComponent: ComponentType<*>) => {
-  const mconfig = { ...defaultConfig, ...config };
-  return connect(mapStateToProps, mapDispatchToProps, mergeProps, options)(
-    reduxForm6(mconfig)(ReduxFormCompat(mconfig, WrappedComponent))
-  );
 };
